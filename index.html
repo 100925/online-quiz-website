@@ -1,78 +1,214 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuizMaster | Online Quiz</title>
+  <meta name="description" content="QuizMaster - Interactive Online Quiz Platform. Test your knowledge in Programming, Java, Python, SQL, and General Knowledge.">
+  <title>Online Quiz Website | QuizMaster</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
+  <!-- Header with Brand & Backend Status -->
   <header class="header">
-    <h1>QuizMaster</h1>
-    <p>Test your knowledge. Challenge yourself!</p>
+    <div class="header-content">
+      <div class="brand">
+        <span class="logo-icon" aria-hidden="true">🧠</span>
+        <div>
+          <h1>Online Quiz Website</h1>
+          <p>QuizMaster · Test your knowledge. Challenge yourself!</p>
+        </div>
+      </div>
+      <div id="api-status-badge" class="api-status checking" title="Backend Server Status" aria-live="polite">
+        <span class="status-dot"></span>
+        <span id="api-status-text">Checking backend...</span>
+      </div>
+    </div>
   </header>
 
   <main class="container">
+    <!-- Notification / Alert Banner -->
+    <div id="alert-banner" class="alert-banner hidden" role="alert">
+      <span id="alert-message"></span>
+      <button id="alert-close-btn" class="alert-close" aria-label="Close message">×</button>
+    </div>
+
+    <!-- 1. Start Screen -->
     <section id="start-screen" class="card center">
-      <div class="emoji">🧠</div>
+      <div class="emoji" aria-hidden="true">🚀</div>
       <h2>Welcome to QuizMaster</h2>
-      <p>10 questions · 5 minutes · 10 points per correct answer</p>
-      <p>Choose the correct answer and test your skills.</p>
-      <button id="start-btn" class="btn">Start Quiz</button>
-    </section>
+      <p class="subtitle">Customize your challenge and test your programming and general knowledge skills.</p>
 
-    <section id="quiz-screen" class="card hidden">
-      <div class="quiz-top">
-        <span id="question-count">Question 1 of 10</span>
-        <span id="timer">05:00</span>
+      <!-- Quiz Configuration Selectors -->
+      <div class="config-grid">
+        <div class="form-group">
+          <label for="category-select">Select Category</label>
+          <select id="category-select" class="form-control">
+            <option value="All" selected>All Categories (All 35 Questions)</option>
+            <option value="Programming">Programming</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="SQL">SQL</option>
+            <option value="General Knowledge">General Knowledge</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="difficulty-select">Select Difficulty</label>
+          <select id="difficulty-select" class="form-control">
+            <option value="All">All Difficulties</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
       </div>
 
-      <div class="progress-track">
-        <div id="progress-bar"></div>
+      <!-- Instructions Box -->
+      <div class="instructions-card">
+        <h3>📋 Quiz Rules & Instructions</h3>
+        <ul class="instructions-list">
+          <li><strong>Questions:</strong> Multiple-choice questions loaded from the database based on your selection (or all 35 available questions when 'All' is selected).</li>
+          <li><strong>Time Limit:</strong> 5 minutes (05:00) total. The quiz auto-submits when time runs out.</li>
+          <li><strong>Scoring:</strong> +10 points per correct answer. 0 points for wrong or unanswered.</li>
+          <li><strong>Navigation:</strong> Use <em>Next</em> and <em>Previous</em> to review and change answers anytime before final submission.</li>
+          <li><strong>Submission:</strong> The server securely validates your score against the database.</li>
+        </ul>
       </div>
 
-      <h2 id="question">Question appears here</h2>
-      <div id="options" class="options"></div>
-
-      <p id="answer-message" aria-live="polite"></p>
-
-      <button id="next-btn" class="btn" disabled>
-        Next Question →
+      <button id="start-btn" class="btn btn-primary" type="button">
+        Start Quiz 🎯
       </button>
     </section>
 
-    <section id="result-screen" class="card center hidden">
-      <div class="emoji">🏆</div>
-      <h2 id="result-title">Quiz Completed!</h2>
-      <p id="result-message"></p>
+    <!-- 2. Loading State -->
+    <section id="loading-screen" class="card center hidden" aria-live="polite">
+      <div class="spinner"></div>
+      <h2 id="loading-text">Preparing your quiz questions...</h2>
+      <p>Connecting to QuizMaster database...</p>
+    </section>
 
+    <!-- 3. Active Quiz Screen -->
+    <section id="quiz-screen" class="card hidden">
+      <!-- Quiz Top Metadata & Timer -->
+      <div class="quiz-top">
+        <div class="quiz-badges">
+          <span id="badge-category" class="badge">Programming</span>
+          <span id="badge-difficulty" class="badge badge-diff">Medium</span>
+        </div>
+        <div class="quiz-status-right">
+          <span id="question-count" class="question-count-text">Question 1 of 10</span>
+          <div id="timer" class="timer-box" aria-label="Time remaining">
+            <span class="timer-icon" aria-hidden="true">⏱️</span>
+            <span id="timer-text">05:00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Track -->
+      <div class="progress-track" aria-hidden="true">
+        <div id="progress-bar" style="width: 10%;"></div>
+      </div>
+
+      <!-- Answered Status Pill -->
+      <div class="answered-summary">
+        <span id="answered-count-text">Answered: 0 of 10</span>
+      </div>
+
+      <!-- Question Text -->
+      <h2 id="question" class="question-title">Loading question...</h2>
+
+      <!-- Multiple-Choice Options -->
+      <div id="options" class="options" role="radiogroup" aria-labelledby="question"></div>
+
+      <!-- Answer Helper Message -->
+      <p id="answer-message" class="answer-helper" aria-live="polite"></p>
+
+      <!-- Navigation Controls -->
+      <div class="quiz-nav">
+        <button id="prev-btn" class="btn btn-secondary" type="button" disabled>
+          ← Previous
+        </button>
+        <button id="next-btn" class="btn btn-primary" type="button">
+          Next Question →
+        </button>
+        <button id="submit-btn" class="btn btn-success hidden" type="button">
+          Submit Quiz ✓
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. Result Screen -->
+    <section id="result-screen" class="card center hidden">
+      <div id="result-badge-icon" class="emoji" aria-hidden="true">🏆</div>
+      <h2 id="result-title">Quiz Completed!</h2>
+      <p id="result-message" class="result-message"></p>
+
+      <!-- Results Grid -->
       <div class="result-grid">
         <div class="result-box">
           <span>Score</span>
           <strong id="score">0/100</strong>
         </div>
         <div class="result-box">
-          <span>Correct</span>
-          <strong id="correct">0</strong>
-        </div>
-        <div class="result-box">
-          <span>Wrong / Unanswered</span>
-          <strong id="wrong">0</strong>
-        </div>
-        <div class="result-box">
           <span>Percentage</span>
           <strong id="percentage">0%</strong>
         </div>
+        <div class="result-box">
+          <span>Correct Answers</span>
+          <strong id="correct" class="text-success">0</strong>
+        </div>
+        <div class="result-box">
+          <span>Wrong Answers</span>
+          <strong id="wrong" class="text-danger">0</strong>
+        </div>
+        <div class="result-box">
+          <span>Unanswered</span>
+          <strong id="unanswered" class="text-warning">0</strong>
+        </div>
+        <div class="result-box">
+          <span>Time Taken</span>
+          <strong id="time-taken">0s</strong>
+        </div>
       </div>
 
-      <button id="restart-btn" class="btn">Play Again ↻</button>
+      <!-- Detailed Question Review Section -->
+      <div class="review-section">
+        <div class="review-header">
+          <h3>Detailed Question Review</h3>
+          <button id="toggle-review-btn" class="btn-text" type="button">Show Breakdown ▼</button>
+        </div>
+        <div id="review-container" class="review-container hidden">
+          <!-- Populated dynamically by script.js -->
+        </div>
+      </div>
+
+      <!-- Results Action Buttons -->
+      <div class="result-actions">
+        <button id="restart-btn" class="btn btn-primary" type="button">Restart Quiz ↻</button>
+        <button id="home-btn" class="btn btn-secondary" type="button">Back to Home 🏠</button>
+      </div>
     </section>
   </main>
 
+  <!-- Submit Confirmation Modal Dialog -->
+  <div id="confirm-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <h3 id="modal-title">Ready to Submit Quiz?</h3>
+      <p id="modal-summary" class="modal-summary">You have answered 0 of 10 questions.</p>
+      <div id="modal-unanswered-warning" class="modal-warning hidden">
+        ⚠️ You still have unanswered questions! Unanswered questions will be scored as 0.
+      </div>
+      <p class="modal-prompt">Are you sure you want to finish and submit your answers?</p>
+      <div class="modal-actions">
+        <button id="modal-cancel-btn" class="btn btn-secondary" type="button">Continue Reviewing</button>
+        <button id="modal-confirm-btn" class="btn btn-success" type="button">Yes, Submit Quiz ✓</button>
+      </div>
+    </div>
+  </div>
+
   <footer>
-    <p>Built with HTML, CSS & JavaScript</p>
+    <p><strong>QuizMaster</strong> · Built with Node.js, Express, MongoDB Atlas, HTML5, CSS3 & JavaScript</p>
   </footer>
 </body>
 </html>
