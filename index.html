@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizMaster | Online Quiz</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <h1>QuizMaster</h1>
+    <p>Test your knowledge. Challenge yourself!</p>
+  </header>
+
+  <main class="container">
+    <section id="start-screen" class="card center">
+      <div class="emoji">🧠</div>
+      <h2>Welcome to QuizMaster</h2>
+      <p>10 questions · 5 minutes · 10 points per correct answer</p>
+      <p>Choose the correct answer and test your skills.</p>
+      <button id="start-btn" class="btn">Start Quiz</button>
+    </section>
+
+    <section id="quiz-screen" class="card hidden">
+      <div class="quiz-top">
+        <span id="question-count">Question 1 of 10</span>
+        <span id="timer">05:00</span>
+      </div>
+
+      <div class="progress-track">
+        <div id="progress-bar"></div>
+      </div>
+
+      <h2 id="question">Question appears here</h2>
+      <div id="options" class="options"></div>
+
+      <p id="answer-message" aria-live="polite"></p>
+
+      <button id="next-btn" class="btn" disabled>
+        Next Question →
+      </button>
+    </section>
+
+    <section id="result-screen" class="card center hidden">
+      <div class="emoji">🏆</div>
+      <h2 id="result-title">Quiz Completed!</h2>
+      <p id="result-message"></p>
+
+      <div class="result-grid">
+        <div class="result-box">
+          <span>Score</span>
+          <strong id="score">0/100</strong>
+        </div>
+        <div class="result-box">
+          <span>Correct</span>
+          <strong id="correct">0</strong>
+        </div>
+        <div class="result-box">
+          <span>Wrong / Unanswered</span>
+          <strong id="wrong">0</strong>
+        </div>
+        <div class="result-box">
+          <span>Percentage</span>
+          <strong id="percentage">0%</strong>
+        </div>
+      </div>
+
+      <button id="restart-btn" class="btn">Play Again ↻</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built with HTML, CSS & JavaScript</p>
+  </footer>
+</body>
+</html>
