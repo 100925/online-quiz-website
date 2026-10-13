@@ -1,3 +1,4 @@
+
 # 🧠 QuizMaster – Online Quiz Platform
 
 QuizMaster is a full-stack, responsive web application designed for students, developers, and quiz enthusiasts to test their knowledge across multiple domains such as **Programming, Java, Python, SQL, and General Knowledge**.
@@ -303,3 +304,4 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/questions?category=Python&diff
 
 ## 📄 License
 This project is open-source and free to use for educational, college, and portfolio purposes.
+
