@@ -1,5 +1,5 @@
 
-# 🧠 QuizMaster – Online Quiz Platform
+#  QuizMaster – Online Quiz Platform
 
 QuizMaster is a full-stack, responsive web application designed for students, developers, and quiz enthusiasts to test their knowledge across multiple domains such as **Programming, Java, Python, SQL, and General Knowledge**.
 
@@ -7,9 +7,9 @@ Built with a clean vanilla **HTML5 / CSS3 / JavaScript** frontend and a secure *
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
-### 🖥️ Frontend (Client Experience)
+###  Frontend (Client Experience)
 - **Modern Brand Interface:** Purple-themed UI with clean typography, high-contrast accessible controls, and responsive layout for mobile, tablet, and desktop.
 - **Dynamic Category & Difficulty Selection:** Choose specific topics (Programming, Java, Python, SQL, General Knowledge) and skill levels (Easy, Medium, Hard, or All).
 - **Interactive Quiz Navigation:** Jump seamlessly between questions with **Next** and **Previous** buttons without losing answers.
@@ -20,7 +20,7 @@ Built with a clean vanilla **HTML5 / CSS3 / JavaScript** frontend and a secure *
 - **Question Review Breakdown:** Collapsible review showing each question, your answer, the correct answer, and an in-depth explanatory breakdown.
 - **Live Backend Health Indicator:** Real-time indicator pill shows whether the backend API is connected.
 
-### 🛡️ Backend & Security
+###  Backend & Security
 - **Server-Side Score Validation:** The frontend never decides scores or correctness. Answers are securely evaluated against MongoDB records.
 - **Protected Question APIs:** Correct answers and explanations are stripped from question endpoints, preventing cheating via browser inspect tools.
 - **Persistence:** All completed quiz attempts and question breakdowns are saved in MongoDB Atlas with unique identifiers.
@@ -29,7 +29,7 @@ Built with a clean vanilla **HTML5 / CSS3 / JavaScript** frontend and a secure *
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Layer | Technologies |
 | :--- | :--- |
@@ -40,7 +40,7 @@ Built with a clean vanilla **HTML5 / CSS3 / JavaScript** frontend and a secure *
 
 ---
 
-## 📁 Project Directory Structure
+##  Project Directory Structure
 
 ```text
 online-quiz/
@@ -66,7 +66,7 @@ online-quiz/
 
 ---
 
-## 📋 Prerequisites
+##  Prerequisites
 
 Before running the project, make sure you have installed:
 1. **Node.js** (v18.0.0 or later) – [Download Node.js](https://nodejs.org/)
@@ -76,7 +76,7 @@ Before running the project, make sure you have installed:
 
 ---
 
-## 🚀 Quick Start Guide
+##  Quick Start Guide
 
 ### Step 1: Install Dependencies
 Open your terminal in the `backend` folder and install the required Node.js packages:
@@ -194,7 +194,7 @@ You have two convenient ways to access QuizMaster:
 
 #### Option A: Direct Browser Access (Unified Server)
 With the backend server running, open your web browser and go to:
-👉 **[http://localhost:5000](http://localhost:5000)**
+ **[http://localhost:5000](http://localhost:5000)**
 
 The backend automatically serves `index.html`, `style.css`, and `script.js` securely.
 
@@ -205,7 +205,7 @@ The backend automatically serves `index.html`, `style.css`, and `script.js` secu
 
 ---
 
-## 📡 REST API Reference
+##  REST API Reference
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
@@ -251,7 +251,7 @@ The backend automatically serves `index.html`, `style.css`, and `script.js` secu
 
 ---
 
-## 🧪 Verification & Testing
+##  Verification & Testing
 
 You can test all endpoints directly using PowerShell:
 
@@ -268,7 +268,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/questions?category=Python&diff
 
 ---
 
-## 🌐 Production Deployment Guide
+##  Production Deployment Guide
 
 ### Deploy Backend (e.g. Render / Railway / Render.com)
 1. Push your repository to GitHub (ensure `.gitignore` excludes `.env` and `node_modules`).
@@ -291,7 +291,7 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/questions?category=Python&diff
 
 ---
 
-## ⚠️ Troubleshooting & Common Issues
+##  Troubleshooting & Common Issues
 
 | Issue | Cause | Solution |
 | :--- | :--- | :--- |
@@ -302,6 +302,6 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/questions?category=Python&diff
 
 ---
 
-## 📄 License
+##  License
 This project is open-source and free to use for educational, college, and portfolio purposes.
 
